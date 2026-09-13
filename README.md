@@ -17,6 +17,8 @@ User → [Proxy: src/proxy.py] → heuristics + embedding similarity
 
 Dashboard: dashboard/app.py → queries Exasol → live feed + stats + replay
 ```
+## Demo Video Link:
+https://drive.google.com/file/d/1vLZ5-C6C-q2LPZxodXFotqajf_4a920N/view?usp=drive_link
 
 ## 1. Install Exasol Personal (Windows)
 
