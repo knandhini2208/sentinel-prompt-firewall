@@ -2,7 +2,7 @@ import re
 
 # Fast, crude first-pass filter. Each hit adds to the heuristic score (0-1 capped).
 PATTERNS = [
-        (r"\bignore\b[\w\s]{0,25}\binstructions\b", "instruction_override"),
+    (r"\bignore\b[\w\s]{0,25}\binstructions\b", "instruction_override"),
     (r"\bdisregard (your|the) (system prompt|instructions|rules)\b", "instruction_override"),
     (r"\bforget (everything|what) you (were|are) told\b", "instruction_override"),
     (r"\bdeveloper mode\b", "roleplay_jailbreak"),

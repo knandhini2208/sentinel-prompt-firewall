@@ -60,6 +60,7 @@ def chat(req: ChatRequest):
     if result["decision"] == "BLOCK":
         response_text = "This request was blocked by Sentinel's safety filter."
     else:
+        # FLAG still gets forwarded in this MVP; block only stops execution.
         response_text = call_llm(req.prompt)
 
     latency_ms = int((time.time() - start) * 1000)

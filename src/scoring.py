@@ -1,14 +1,13 @@
 import json
-import numpy as np
 
 from db import get_connection
-from embeddings import embed, cosine_sim
+from embeddings import embed
 from heuristics import heuristic_score
 
 BLOCK_THRESHOLD = 0.65
 FLAG_THRESHOLD = 0.45
 
-_fingerprint_cache = None  # list of (category, pattern_text, np.array)
+_fingerprint_cache = None
 
 
 def load_fingerprints(force=False):
@@ -21,7 +20,7 @@ def load_fingerprints(force=False):
         "SELECT CATEGORY, PATTERN_TEXT, EMBEDDING FROM SENTINEL.ATTACK_FINGERPRINTS"
     ).fetchall()
     _fingerprint_cache = [
-        (cat, text, np.asarray(json.loads(emb), dtype=np.float32))
+        (cat, text, json.loads(emb))
         for cat, text, emb in rows
     ]
     return _fingerprint_cache
@@ -32,10 +31,10 @@ def similarity_score(prompt: str):
     if not fingerprints:
         return 0.0, None
 
-    prompt_vec = embed(prompt)
+    prompt_vec = embed(prompt).tolist()
     best_score, best_category = 0.0, None
     for category, _text, vec in fingerprints:
-        sim = cosine_sim(prompt_vec, vec)
+        sim = sum(a * b for a, b in zip(prompt_vec, vec))
         if sim > best_score:
             best_score, best_category = sim, category
     return best_score, best_category

@@ -59,6 +59,6 @@ df = pd.DataFrame(
         "Heuristic", "Similarity", "Latency (ms)",
     ],
 )
-st.dataframe(df, width="stretch")
+st.dataframe(df, use_container_width=True)
 
 st.caption("Replay: pick a session ID above, filter, and walk through it live during your demo.")
